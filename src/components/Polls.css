@@ -1,0 +1,12 @@
+.pollquestion {
+  float: right;
+}
+.brhalf {
+  display: block;
+  margin-bottom: 2em;
+}
+
+.pollcol4 {
+  background-color: #f0f1ff;
+  padding: 15px 15px;
+}

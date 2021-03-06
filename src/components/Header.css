@@ -1,0 +1,25 @@
+@media screen and (max-width: 768px) {
+    .formcontrol {
+      width: 220%;
+      /* background-color: red; */
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    .formcontrol {
+      width: 325%;
+      /* background-color: yellow; */
+    }
+  }
+  @media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .formcontrol {
+      width: 430%;
+      /* background-color: green; */
+    }
+  }
+  @media screen and (min-width: 1440px) and (max-width: 2560px) {
+    .formcontrol {
+      width: 430%;
+      /* background-color: orange; */
+    }
+  }
+  

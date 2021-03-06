@@ -1,0 +1,34 @@
+.postcol8 {
+    background-color: #ededed;
+    padding: 15px 15px;
+  }
+  .pollcol4 {
+    background-color: #f0f1ff;
+    padding: 15px 15px;
+  }
+  .tags {
+    background-color: #e3fffd;
+    color: blue;
+    padding: 5px;
+  }
+  .profilepic {
+    border-radius: 15%;
+  }
+  .editor {
+    width: 100%;
+    height: 200px;
+    background-color: white;
+    color: black;
+    resize: none;
+  }
+  .imageupload {
+    display: block;
+  }
+  .imageinput {
+    display: none;
+  }
+  .brhalf {
+    display: block;
+    margin-bottom: 2em;
+  }
+  
