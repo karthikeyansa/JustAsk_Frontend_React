@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import technology from "../assets/technologies.png";
-import { Container, Navbar, Form, FormControl, Nav } from "react-bootstrap";
+import { Container, Navbar, Form, Nav } from "react-bootstrap";
 import "./Starting.css";
 
 function Starting() {
@@ -19,12 +19,7 @@ function Starting() {
             />
           </Navbar.Brand>
           <Form className="formcontrol searchbox">
-            <FormControl
-              type="text"
-              placeholder="🔍 Search"
-              className="mr-sm-2"
-              width="100%"
-            />
+            
           </Form>
           <Nav className="mr-auto">
             &nbsp;

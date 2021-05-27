@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Jumbotron, Button, Container, Col, Row, Modal } from "react-bootstrap";
+import { Jumbotron, Button, Container, Col, Row, Modal, Form, FormControl } from "react-bootstrap";
 import Truncate from "react-truncate";
 import moment from "moment";
 import "./Section.css";
@@ -10,6 +10,7 @@ import camera from "../assets/camera.png";
 import { API } from "../Apiservice";
 import { useCookies } from "react-cookie";
 import Baseurl from "./Baseurl";
+import ReactPaginate from 'react-paginate';
 
 const baseurl = Baseurl();
 
@@ -242,6 +243,8 @@ function Section(props) {
   const [modalShow, setModalShow] = useState(false);
   const [modalShow2, setModalShow2] = useState(false);
   const [token] = useCookies(["mr-token"]);
+  const [searchTerm, setsearchTerm] = useState("");
+
 
   useEffect(() => {
     console.log("token", token);
@@ -269,14 +272,127 @@ function Section(props) {
       console.log("poll voted")
   }
 
+  const [pageNumber, setpageNumber] = useState(0);
+
+  const postsperPage = 3;
+  const pagesVisited = pageNumber * postsperPage;
+
+  const displayPosts = posts.slice(pagesVisited, pagesVisited + postsperPage).filter((post)=>{
+    if (searchTerm == ""){
+      return post
+    }
+    else if (post.title.toLowerCase().includes(searchTerm.toLowerCase())){
+      return post
+    }
+    else if (post.body.toLowerCase().includes(searchTerm.toLowerCase())){
+      return post
+    }
+    else if (post.tags.toLowerCase().includes(searchTerm.toLowerCase())){
+      return post
+    }
+  }).map((post) => {
+          return (
+              <React.Fragment>
+                <h3 className="text-dark">{post.title}</h3>
+                <br />
+                <Container>
+                  <Row>
+                    <Col>
+                      <span className="text-primary">
+                      Asked on&nbsp;
+                        {moment(post.timestamp).format("DD-MMM-YY")}
+                      </span>
+                    </Col>
+                    <Col>
+                      <span className="text-success">
+                        Suggestions: {post.commentcount}
+                      </span>
+                    </Col>
+                    <Col>
+                      <span className="text-primary">
+                        Votes: {post.likecount}
+                      </span>
+                    </Col>
+                    
+                  </Row>
+                </Container>
+                <br />
+
+                <h5
+                  className="text-dark"
+                  title="Click to view"
+                  onClick={postClicked(post)}
+                >
+                  <Truncate
+                    lines={2}
+                    ellipsis={
+                      <span>
+                        ...
+                        <ImportContactsIcon />
+                      </span>
+                    }
+                  >
+                    {post.body}
+                  </Truncate>
+                </h5>
+                <Container>
+                  <Row>
+                    <Col>
+                      <br />
+                      {post.tags.split(", ").map((tag) => {
+                        return (
+                          <React.Fragment>
+                            <a
+                              href="#"
+                              className="btn btn-outline-danger btn-sm"
+                            >
+                              {tag}
+                            </a>
+                            &nbsp;
+                          </React.Fragment>
+                        );
+                      })}
+                    </Col>
+                    <Col>
+                    </Col>
+                    <Col>
+                      <br className="brhalf" />
+                      <span>Posted By: </span>
+                      <br />
+                      <img
+                        src={baseurl + post.get_userpic}
+                        className="profilepic"
+                        height="50"
+                        width="50"
+                      />
+                      <br className="brhalf" />
+                      <p className="text-primary">
+                        {post.get_username}
+                      </p>
+                    </Col>
+                  </Row>
+                </Container>
+                <hr />
+              </React.Fragment>
+            );
+  });
+
+  const pageCount = Math.ceil(posts.length / postsperPage);
+  const changePage = ({selected}) => {
+    setpageNumber(selected);
+  }
+
   return (
     <React.Fragment>
       <Container>
         <br />
         <Row>
-          <Col></Col>
-          <Col></Col>
-          <Col>
+          <Col sm={8}>
+            <Form inline>
+              <FormControl type="text" placeholder="🔍 Search" className="mr-sm-2" onChange={event => {setsearchTerm(event.target.value)}} />
+            </Form>
+          </Col>
+          <Col sm={4}>
             <Button variant="primary" onClick={() => setModalShow(true)}>
               Ask a Question
             </Button>
@@ -309,94 +425,19 @@ function Section(props) {
                 <br />
                 <React.Fragment>
                   <Container>
-                    {posts &&
-                      posts.map((post, i) => {
-                        return (
-                          <React.Fragment>
-                            <h3 className="text-dark">{post.title}</h3>
-                            <br />
-                            <Container>
-                              <Row>
-                                <Col>
-                                  <span className="text-primary">
-                                  Asked on&nbsp;
-                                    {moment(post.timestamp).format("MMM-YY")}
-                                  </span>
-                                </Col>
-                                <Col>
-                                  <span className="text-success">
-                                    Suggestions: {post.commentcount}
-                                  </span>
-                                </Col>
-                                <Col>
-                                  <span className="text-primary">
-                                    Votes: {post.likecount}
-                                  </span>
-                                </Col>
-                                
-                              </Row>
-                            </Container>
-                            <br />
-
-                            <h5
-                              className="text-dark"
-                              title="Click to view"
-                              onClick={postClicked(post)}
-                            >
-                              <Truncate
-                                lines={2}
-                                ellipsis={
-                                  <span>
-                                    ...
-                                    <ImportContactsIcon />
-                                  </span>
-                                }
-                              >
-                                {post.body}
-                              </Truncate>
-                            </h5>
-                            <Container>
-                              <Row>
-                                <Col>
-                                  <br />
-                                  {post.tags.split(", ").map((tag) => {
-                                    return (
-                                      <React.Fragment>
-                                        <a
-                                          href="/"
-                                          className="btn btn-outline-danger btn-sm"
-                                        >
-                                          {tag}
-                                        </a>
-                                        &nbsp;
-                                      </React.Fragment>
-                                    );
-                                  })}
-                                </Col>
-                                <Col>
-                                </Col>
-                                <Col>
-                                  <br className="brhalf" />
-                                  <span>Posted By: </span>
-                                  <br />
-                                  <img
-                                    src={baseurl + post.get_userpic}
-                                    className="profilepic"
-                                    height="50"
-                                    width="50"
-                                  />
-                                  <br className="brhalf" />
-                                  <p className="text-primary">
-                                    {post.get_username}
-                                  </p>
-                                </Col>
-                              </Row>
-                            </Container>
-                            <hr />
-                          </React.Fragment>
-                        );
-                      })}
+                    {displayPosts}
                   </Container>
+                  <ReactPaginate 
+                      previousLabel={"Previous"}
+                      nextLabel={"Next"}
+                      pageCount={pageCount}
+                      onPageChange={changePage}
+                      containerClassName={"paginationbutton"}
+                      previousLinkClassName={"previousbutton"}
+                      nextLinkClassName={"nextbutton"}
+                      disabledClassName={"paginationdisabled"}
+                      activeClassName={"paginationActive"}
+                    />
                 </React.Fragment>
               </Jumbotron>
             </Container>
@@ -464,10 +505,10 @@ function Section(props) {
               {poll.completed === false && (
                 <React.Fragment>
                   <input type="radio" name="choice" onClick={() => pollvote(poll.choice1, poll)}/>&nbsp;{poll.choice1}<br /><br />
-                  <input type="radio" name="choice" onClick={() => pollvote(poll.choice1, poll)}/>&nbsp;{poll.choice1}<br /><br />
-                  {poll.choice3 && (<React.Fragment><input type="radio" name="choice" onClick={() => pollvote(poll.choice1, poll)}/>&nbsp;{poll.choice1}<br /><br /></React.Fragment>)}
-                  {poll.choice4 && (<React.Fragment><input type="radio" name="choice" onClick={() => pollvote(poll.choice1, poll)}/>&nbsp;{poll.choice1}<br /><br /></React.Fragment>)}
-                  {poll.choice5 && (<React.Fragment><input type="radio" name="choice" onClick={() => pollvote(poll.choice1, poll)}/>&nbsp;{poll.choice1}<br /><br /></React.Fragment>)}
+                  <input type="radio" name="choice" onClick={() => pollvote(poll.choice2, poll)}/>&nbsp;{poll.choice2}<br /><br />
+                  {poll.choice3 && (<React.Fragment><input type="radio" name="choice" onClick={() => pollvote(poll.choice3, poll)}/>&nbsp;{poll.choice3}<br /><br /></React.Fragment>)}
+                  {poll.choice4 && (<React.Fragment><input type="radio" name="choice" onClick={() => pollvote(poll.choice4, poll)}/>&nbsp;{poll.choice4}<br /><br /></React.Fragment>)}
+                  {poll.choice5 && (<React.Fragment><input type="radio" name="choice" onClick={() => pollvote(poll.choice5, poll)}/>&nbsp;{poll.choice5}<br /><br /></React.Fragment>)}
                 </React.Fragment>
               )}
               Total response: {poll.total_response}
@@ -483,7 +524,7 @@ function Section(props) {
                     height="50"
                     width="50"
                     /><br />By:&nbsp;<span>{poll.get_username}</span>                         
-                </Col>
+              </Col>
             </React.Fragment>
               )}
             </Jumbotron>

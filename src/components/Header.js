@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from "../assets/logo.png";
 import "./Header.css";
-import { Navbar, Nav, Form, FormControl, Container } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { API } from "../Apiservice";
 
@@ -42,14 +42,9 @@ function Header(props) {
             <Nav className="mr-auto">
               <Nav.Link href="/polls">Polls</Nav.Link>
             </Nav>
-            <Form className="formcontrol">
-              <FormControl
-                type="text"
-                width="100%"
-                placeholder="🔍 Search"
-                className="mr-sm-2"
-              />
-            </Form>
+            <div className="formcontrol">
+
+            </div>
             <Nav className="mr-auto">
               {user && (
                 <Nav.Link href="/profile">{user.get_proname}</Nav.Link>

@@ -79,6 +79,15 @@ export class API {
       body: uploadData,
     }).then((resp) => resp.json());
   }
+  static Postupdate(uploadData, token, post) {
+    return fetch(baseurl + `/api/posts/${post.id}/`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Token ${token['mr-token']}`,
+      },
+      body: uploadData,
+    }).then((resp) => resp.json());
+  }
   static Userposts(token) {
     return fetch(baseurl + `/api/posts/myposts/`, {
       method: "GET",
@@ -225,4 +234,23 @@ export class API {
       body: body,
     }).then((resp) => resp.json());
   }
+  // search js
+  static Newchat(body, post, token) {
+    return fetch(baseurl+ `/api/chats/newchat/${post.id}/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Token ${token['mr-token']}`,
+      },
+      body: body,
+    }).then((resp) => resp.json());
+  }
+  static Getchats(post, token) {
+    return fetch(baseurl+ `/api/chats/getchats/${post.id}/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Token ${token['mr-token']}`,
+      },
+    }).then((resp) => resp.json());
+  }
+
 }

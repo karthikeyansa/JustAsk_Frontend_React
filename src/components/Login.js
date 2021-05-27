@@ -4,7 +4,6 @@ import {
   Form,
   Button,
   Navbar,
-  FormControl,
   Nav,
 } from "react-bootstrap";
 import { useCookies } from "react-cookie";
@@ -26,7 +25,7 @@ function Login() {
 
   const LoginClicked = () => {
     API.Login({ email: email, password: password })
-      .then((resp) => setToken("mr-token", resp.key))
+      .then((resp) => {if(resp.key){setToken("mr-token", resp.key)}else{alert("Invalid user")}})
       .catch((error) => console.log(error));
   };
 
@@ -52,12 +51,7 @@ function Login() {
             />
           </Navbar.Brand>
           <Form className="formcontrol searchbox">
-            <FormControl
-              type="text"
-              width="100%"
-              placeholder="🔍 Search"
-              className="mr-sm-2"
-            />
+            
           </Form>
           <Nav className="mr-auto">
             &nbsp;
@@ -75,7 +69,7 @@ function Login() {
           <br />
           <br />
           <GoogleLogin
-            clientId="<Google CLient ID>"
+            clientId=<Google Client ID>
             buttonText="Log in with Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}

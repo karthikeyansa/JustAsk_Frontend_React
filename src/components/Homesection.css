@@ -1,3 +1,46 @@
 .postquestion{
     float:right;
 }
+.postcol8 {
+    background-color: #ededed;
+    padding: 15px 15px;
+  }
+
+  .tags {
+    background-color: #e3fffd;
+    color: blue;
+    padding: 5px;
+  }
+  .profilepic {
+    border-radius: 15%;
+  }
+  .brhalf {
+    display: block;
+    margin-bottom: 2em;
+  }
+
+.paginationbutton{
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationbutton a{
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #2b2eff;
+  color: #2b2eff;
+  cursor: pointer;
+  
+}
+.paginationbutton a:hover{
+  color: white;
+  background-color: #2b2eff;
+}
+.paginationActive a{
+  color: white;
+  background-color: #2b2eff;
+}

@@ -5,7 +5,6 @@ import {
   Button,
   Navbar,
   Nav,
-  FormControl,
 } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { API } from "../Apiservice";
@@ -51,12 +50,7 @@ function Register() {
             />
           </Navbar.Brand>
           <Form className="formcontrol searchbox">
-            <FormControl
-              type="text"
-              width="100%"
-              placeholder="🔍 Search"
-              className="mr-sm-2"
-            />
+            
           </Form>
           <Nav className="mr-auto">
             &nbsp;
@@ -74,7 +68,7 @@ function Register() {
           <br />
           <br />
           <GoogleLogin
-            clientId="<Google CLient ID>"
+            clientId="56429741622-6s6v93sca7nneu1cm7u3hnqijbq3q6ga.apps.googleusercontent.com"
             buttonText="Log in with Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
